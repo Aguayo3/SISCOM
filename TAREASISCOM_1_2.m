@@ -106,7 +106,7 @@ Yl=fft(ml);
 Yl=fftshift(Yl);
 
 f8=linspace(-1,1,L)*Fs/2;
-
+figure
 plot(f8,abs(Yl)/L)
 xlim([-350 350])
 %sound(ml,Fs)
