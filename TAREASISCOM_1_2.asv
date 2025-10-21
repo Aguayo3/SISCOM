@@ -97,16 +97,15 @@ xlim([-1200 1200])
 grid on
 
 %% 7
-sound(m,Fs)
+sound(m,100e3)
 
 %% 8
 ml=bandpass(m,[200 300],Fs);
 
-Yl=fft(ml);
-Yl=fftshift(Yl);
+Yl=fft(ml,L);
+Yl=fftshift(Yl,L);
 
-f8=linspace(-1,1,L)*Fs/2;
+f8=linspace(-1,1,L);
 
 plot(f8,abs(Yl)/L)
-xlim([-350 350])
-%sound(ml,Fs)
+
