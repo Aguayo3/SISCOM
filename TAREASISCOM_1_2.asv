@@ -47,12 +47,16 @@ PSD_shifted = fftshift(PSD);
 f = linspace(-Fs/2, Fs/2, L);
 
 figure
-plot(f, (PSD_shifted),Color='#841A1B')
-xlim([-300 300])
+plot(f, pow2db(PSD_shifted),Color='#841A1B')
+xlim([0 50e3])
 xlabel('Frecuencia [Hz]')
 ylabel('PSD [W/Hz]')
 legend('PSD(f) de m(t)',location='north',FontSize=11)
 grid on
+hold on
+periodogram(m,rectwin(L),L,Fs,'psd');
+hold off
+
 %% 5
 Max_freq=144.848;
 
