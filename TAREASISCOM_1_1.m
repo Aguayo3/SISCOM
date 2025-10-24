@@ -20,9 +20,9 @@ end
 
 %% --- CONFIGURACIÓN ---
 carpetas={ ... %<-- Cambia las rutas
-        "C:\Users\aguay\OneDrive\Documentos\GitHub\SISCUM\laminar\op1"
-        "C:\Users\aguay\OneDrive\Documentos\GitHub\SISCUM\transicion\op1",
-        "C:\Users\aguay\OneDrive\Documentos\GitHub\SISCUM\turbulenta\op1"};
+        "laminar\op1"
+        "transicion\op1",
+        "turbulenta\op1"};
 
 nombre_carpetas={'laminar','transicion','turbulenta'};
 
