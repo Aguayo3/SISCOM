@@ -29,7 +29,7 @@ M1=fftshift(M2);
 f=linspace(-1,1,L)*Fs/2;
 
 figure;
-plot(f,M1,LineWidth=1,Color='#008F39');
+plot(f,M1/L,LineWidth=1,Color='#008F39');
 xlim([-300 300])
 xlabel('Frecuencia (Hz)');
 ylabel('Magnitud');
@@ -47,52 +47,62 @@ PSD_shifted = fftshift(PSD);
 f = linspace(-Fs/2, Fs/2, L);
 
 figure
-plot(f, pow2db(PSD_shifted),Color='#841A1B')
-xlim([0 50e3])
+plot(f, (PSD_shifted),Color='#841A1B')
+xlim([-300 300])
 xlabel('Frecuencia [Hz]')
 ylabel('PSD [W/Hz]')
 legend('PSD(f) de m(t)',location='north',FontSize=11)
 grid on
-hold on
-periodogram(m,rectwin(L),L,Fs,'psd');
-hold off
-
 %% 5
-Max_freq=144.848;
+PSD_acumulada=cumtrapz(PSD_shifted);
+figure
+plot(f, PSD_acumulada, Color='#0072BD',LineWidth=1.5)
+xlim([-300 300])
+xlabel('Frecuencia [Hz]')
+ylabel('PSD Acumulada')
+legend('PSD Acumulada', location='north', FontSize=11)
+grid on;
+
 
 %% 6
 BW=280;
-fs=600; %mayor a la frecuencia de Nyquist
+fs=600; %mayor a la frecuencia de muestreo de Nyquist y que sea multiplo de Fs para que stride sea entero
+
 ts=1/fs;
 tiempo_final=L*(1/Fs);
-N=tiempo_final/ts;
 stride=round(Fs/fs);
+N=tiempo_final/ts;
 
-%muestreo por arreglos(sin ceros)
-ms=m(1:stride:end);
-tt=t(1:stride:end);
 
 %impulsos discretos(lugares donde no se muestreo es 0)
 mss=zeros(size(m));
 mss(1:stride:end)=m(1:stride:end);
 
 
-%{
-figure
-plot(tt,ms,'o')
-hold on 
-plot(t,[m mss])
-hold off 
-%}
-
 Ys=fft(mss);
-Ys=fftshift(Ys)/length(ms);
+Ys=fftshift(Ys)/N;
 
 f6s=linspace(-1,1,length(mss))*Fs/2;
 
 figure
-plot(f6s,abs(Ys))
-xlim([-1200 1200])
+plot(t,mss,'-b',DisplayName='m(kT)')
+hold on
+plot(t,m,'r',DisplayName='m(t)')
+hold off
+xlim([0 100*ts])
+legend(location='north',FontSize=11)
+grid on
+xlabel('Tiempo [s]')
+ylabel('Amplitud')
+
+
+figure
+plot(f6s,abs(Ys),Color='#008F39',DisplayName='Se\~nal M(f) muestreada')
+xlim([-1800 1800])
+xlabel('Frecuencia [Hz]')
+ylabel('Magnitud')
+legend(location='north',FontSize=11)
+xticks(-1800:600:1800)
 grid on
 
 %% 7
@@ -105,7 +115,19 @@ Yl=fft(ml);
 Yl=fftshift(Yl);
 
 f8=linspace(-1,1,L)*Fs/2;
+
+%escuchar sonido filtrado
+sound(ml,Fs)
 figure
-plot(f8,abs(Yl)/L)
-xlim([-350 350])
-%sound(ml,Fs)
+hold on
+plot(f,M1/L,LineWidth=1,Color='#008F39',DisplayName='Se\~nal M(f)');
+xlim([-300 300])
+xlabel('Frecuencia (Hz)');
+ylabel('Magnitud');
+
+grid on;
+plot(f8,abs(Yl)/L,displayname='Se\~nal Ml(f)')
+hold off
+legend(location='north',FontSize=11)
+
+

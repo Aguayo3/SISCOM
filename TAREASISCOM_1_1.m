@@ -38,7 +38,7 @@ de_renyi=cell(1,length(carpetas));
 
 img_por_segundo = 5; % 10 imágenes corresponden a 1 segundo
 
-%entropia de renyi
+%alpha entropia de renyi
 alpha=0.5;
 
 %% BUcle principal para 3 carpetas
