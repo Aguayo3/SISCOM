@@ -28,7 +28,7 @@ Yam_sc=fftshift(Yam_sc);
 Yam_lc=fftshift(Yam_lc);
 
 figure
-plot(f,abs(Yam_sc))
+plot(f,abs(Yam_sc)/L)
 xlim([2e3-1000 2e3+1000])
 xlabel('Frequency [Hz]');
 ylabel('Magnitude');
@@ -36,8 +36,8 @@ title('Transformada de Fourier Modulacion AM-DSB-SC');
 grid on
 
 figure
-plot(f,abs(Yam_lc))
-ylim([0 5000])
+plot(f,abs(Yam_lc)/L)
+ylim([0 2e-3])
 xlim([2e3-1000 2e3+1000])
 xlabel('Frequency [Hz]');
 ylabel('Magnitude');
